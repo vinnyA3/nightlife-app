@@ -4,10 +4,16 @@ angular.module('loginCtrl', [])
         
         vm.login = function(){
             $auth.login({email: vm.user.email, password: vm.user.password})
-                .then(function(res){
-                    //redirect to the dashboard
-                    //$auth.setToken(res);
-                    $location.path('/dashboard');
+                .then(function(res){                    
+                    //check for token;
+                    if(!res.data.token){
+                        console.log(res.data);
+                        vm.error = true;
+                        vm.errorMessage = res.data.message;
+                    }else{
+                        //redirect to the dashboard
+                        $location.path('/dashboard');
+                    }    
                 })
                 .catch(function(){
                     vm.error = true;

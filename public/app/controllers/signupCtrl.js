@@ -6,7 +6,7 @@ angular.module('signupCtrl', [])
             $auth.signup({name: vm.user.name, email: vm.user.email, password: vm.user.password})
                 .then(function(res){
                 
-                    if(!res.token){
+                    if(!res.data.token){
                         vm.error = true;
                         console.log(res.data);
                         vm.errorMessage = res.data.message;
