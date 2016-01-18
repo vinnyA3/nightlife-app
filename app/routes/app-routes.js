@@ -1,7 +1,9 @@
 //require what we need ...
 var User = require('../models/users'),
     config = require('../../config/config'),
-    jwt = require('jsonwebtoken');
+    jwt = require('jwt-simple'),
+    moment =  require('moment');
+    //jwt = require('jsonwebtoken');
 
 module.exports = function(app,express){
     
@@ -28,13 +30,9 @@ module.exports = function(app,express){
                 }
             }
             //we want to create a token here for client use
-            var token = jwt.sign({
-                name: newUser.name,
-                email: newUser.email,
-                password: newUser.password
-            }, config.secret, {expiresIn: 1440});
-            
-            res.json({token: token});
+            var token = createToken(newUser);
+            console.log(token);
+            res.json({token: token, user:newUser});
             
         });//end save
     });
@@ -43,6 +41,7 @@ module.exports = function(app,express){
     router.post('/login', function(req,res){
         User.findOne({'email': req.body.email})
             .select('email password').exec(function(err,user){
+        
                 if(err){ throw err;}
                 //no user found with the email
                 if(!user){
@@ -55,18 +54,27 @@ module.exports = function(app,express){
                         res.json({success:false, message: 'Incorrect Password!'});
                     }else{
                         //if the password checks out, create a token and send that back
-                        var token = jwt.sign({
-                           email: user.email,
-                           password: user.password
-                        }, config.secret, {expiresIn: 1440});
-                        req.body.token = token;
-                        res.json({token:token});
+                        user = user.toObject();
+                        delete user.password;
+                        var token = createToken(user);
+                        res.json({token:token, user:user});
                     }//end else
                     
                 }
         });
     });
     
+    //create the token
+    function createToken(user){
+        var payload = {
+            exp: moment().add(14, 'days').unix,  
+            iat: moment().unix(),
+            sub: user._id
+        }
+        return jwt.encode(payload,config.secret);
+    };
+    
+    //authenticate and check if we have a valid token in the headers
     function ensureAuthenticated(req, res, next) {
           if (!req.headers.authorization) {
             return res.status(401).send({ message: 'Please make sure your request has an Authorization header' });
@@ -113,11 +121,11 @@ module.exports = function(app,express){
     });*/
 
     // API ROUTES -- for this app, the only authenticated routes are going to be for user profile and mutiple actions on the page
-    router.get('/dashboard', function(req,res){
+    router.get('/dashboard', ensureAuthenticated, function(req,res){
         //with a validated token, we have a decoded property containing the user
         console.log(req.headers);
         console.log(req.headers.authorization);
-        return;
+        res.json({success: true, message:'You made it, congrats!'});
     });
     
     return router;
