@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h1>Sign Up</h1><br>
+            <div ng-if="signup.error" class="alert alert-danger">{{signup.errorMessage}}</div>
+            <form class="" ng-submit="signup.signUp()">
+                <!--<input class="form-control" ng-model="login.user.name" placeholder="Name"><br>-->
+                <input class="form-control" type="text" ng-model="signup.user.name" placeholder="Name"><br>
+                <input class="form-control" type="text" ng-model="signup.user.email" placeholder="Email"><br>
+                <input class="form-control" type="password" ng-model="signup.user.password" placeholder="Password"><br>
+                <input type="submit" class="btn btn-success" value="Sign Up">
+            </form>
+        </div>
+    </div>
+</div>
