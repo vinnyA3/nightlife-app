@@ -9,6 +9,10 @@
   <meta name="author" content="vinny">
   <!-- Bootstrap CSS -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <!-- font awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- custom styles -->
+  <link href="assets/css/styles.css" rel="stylesheet" type="text/css">
 </head>
 
 <body ng-app="mainApp" ng-controller="mainController as main">
@@ -29,17 +33,22 @@
         
         
   </div>
-      
+
+<!-- o-auth-signature -->
+<script src="assets/js/oauth-signature.js"></script>
 <!-- angular -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
-<!-- satellizer -->
+<!-- satellizer-->
 <script src="assets/js/satellizer.min.js"></script>
 <!--controllers-->
 <script src="app/controllers/mainCtrl.js"></script>
 <script src="app/controllers/loginCtrl.js"></script>
 <script src="app/controllers/signupCtrl.js"></script>
+<script src="app/controllers/dashCtrl.js"></script>
 <!-- Services -->
+<script src="app/services/userInfo.js"></script>
+<script src="app/services/yelp.js"></script>
 <!-- main -->
 <script src="app/routes.js"></script>
 <script src="app/app.js"></script>
