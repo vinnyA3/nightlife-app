@@ -19,7 +19,7 @@ module.exports = function(app,express){
         newUser.email = req.body.email;
         newUser.password = newUser.generateHash(req.body.password);
         
-        newUser.save(function(err){
+        newUser.save(function(err,result){
             if(err){
                 //we have a duplicate entry
                 if(err.code == 11000){
@@ -30,9 +30,7 @@ module.exports = function(app,express){
                 }
             }
             //we want to create a token here for client use
-            var token = createToken(newUser);
-            console.log(token);
-            res.json({token: token, user:newUser});
+            res.json({token: createToken(result)});
             
         });//end save
     });
@@ -54,10 +52,7 @@ module.exports = function(app,express){
                         res.json({success:false, message: 'Incorrect Password!'});
                     }else{
                         //if the password checks out, create a token and send that back
-                        user = user.toObject();
-                        delete user.password;
-                        var token = createToken(user);
-                        res.json({token:token, user:user});
+                        res.send({token: createToken(user)});
                     }//end else
                     
                 }
@@ -67,9 +62,9 @@ module.exports = function(app,express){
     //create the token
     function createToken(user){
         var payload = {
-            exp: moment().add(14, 'days').unix,  
+            sub: user._id,
             iat: moment().unix(),
-            sub: user._id
+            exp: moment().add(14, 'days').unix,  
         }
         return jwt.encode(payload,config.secret);
     };
@@ -95,37 +90,15 @@ module.exports = function(app,express){
           req.user = payload.sub;
           next();
     }
-    //route middleware to verify a token
-    /*router.use(function(req,res,next){
-       //check the header/urlparams/postparams for a token
-        var token = req.body.token || req.query.token || req.headers['x-access-token'];
-        
-        //decode the token
-        if(token){
-            //verify the secret and checks the exp
-            jwt.verify(token, config.secret, function(err,decoded){
-               if(err){
-                   return res.status(403).send({success:false, message: 'Failed to authenticate token!'});
-               }
-                  //if everything is okay, save to the request for use in the other routes
-                  req.decoded = decoded;
-                  //break out of middleware limbo
-                  next();
-            });
-            
-        }else{
-            //if there is no token, return an http status of 403(forbidden) and an error message as well
-            return res.status(403).send({success:false, message:'No token provided!'});
-        }
-        
-    });*/
 
-    // API ROUTES -- for this app, the only authenticated routes are going to be for user profile and mutiple actions on the page
+    // API ROUTES -- for this app, the only authenticated routes are going to be for user profile and mutiple actions on the dash page
     router.get('/dashboard', ensureAuthenticated, function(req,res){
-        //with a validated token, we have a decoded property containing the user
-        console.log(req.headers);
-        console.log(req.headers.authorization);
-        res.json({success: true, message:'You made it, congrats!'});
+        //once the middleware is successfully passed, we need to find a user based on the ID sent in the request
+        User.findOne({'_id': req.user}, function(err,user){
+           if(err){return res.send(err);}
+            //send the user's information :)
+             return res.send(user);
+        });
     });
     
     return router;
