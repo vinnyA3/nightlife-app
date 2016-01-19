@@ -7,11 +7,11 @@ angular.module('loginCtrl', [])
                 .then(function(res){                    
                     //check for token;
                     if(!res.data.token){
-                        console.log(res.data);
                         vm.error = true;
                         vm.errorMessage = res.data.message;
                     }else{
                         //redirect to the dashboard
+                        console.log(res.data.user);
                         $location.path('/dashboard');
                     }    
                 })
