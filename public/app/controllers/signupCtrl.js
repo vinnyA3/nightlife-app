@@ -11,7 +11,7 @@ angular.module('signupCtrl', [])
                         console.log(res.data);
                         vm.errorMessage = res.data.message;
                     }else{
-                        $auth.setToken(res);
+                        $auth.setToken(res.data.token);
                         $location.path('/dashboard');
                     }
                 
