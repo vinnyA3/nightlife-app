@@ -3,7 +3,8 @@ angular.module('appRoutes', ['ui.router','satellizer'])
         $stateProvider
             .state('home',{
                 url:'/',
-                templateUrl: 'app/views/pages/home.html'
+                templateUrl: 'app/views/pages/home.html',
+                controller: 'mainController as main'
             })
             .state('login', {
                 url:'/login',
@@ -18,6 +19,7 @@ angular.module('appRoutes', ['ui.router','satellizer'])
             .state('dashboard', {
                 url:'/dashboard',
                 templateUrl: 'app/views/pages/dashboard.html',
+                controller: 'dashController as dash',
                 resolve:{
                     loginRequired: loginRequired
                 }
