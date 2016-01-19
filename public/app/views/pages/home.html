@@ -1,11 +1,22 @@
 <div class="container">
     <div class="row">
         <div class="col-md-7 col-md-offset-2 text-center">
-            <h1>Nightlife App</h1>
+            <h1 class="night-life-title">Nightlife</h1>
             <form>
-                <input class="form-control" placeholder="Where are you?"><br>
-                <input type="submit" class="btn btn-success" value="Search">
+                <input class="form-control" ng-model="main.location" placeholder="Where are you?"><br>
+                <input type="submit" class="btn btn-success" ng-click="main.callYelp()" value="Search">
             </form>
+            
+            <div class="night-life-container">
+                <div class="night-life-data" ng-repeat="venue in main.nightlifeData">
+                    <img class="venue-image" ng-src="{{venue.image_url}}">
+                    <h4 class="venue-title"><a ng-href="{{venue.mobile_url}}" target="_blank">{{venue.name}}</a> &nbsp;<img class="venue-rating-image" ng-src='{{venue.rating_img_url_small}}'></h4>
+                    <p><span ng-repeat="tag in venue.categories">{{tag[0]+ ','}} &nbsp;</span></p>
+                    <p><button class="btn btn-primary">Going?</button></p>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>
