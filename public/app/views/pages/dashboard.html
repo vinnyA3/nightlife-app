@@ -1,1 +1,10 @@
-<h1>This is the authenticated dashboard my brahh!</h1>
+<div class="container">
+    <div class="col-md-4">
+        <h1>User Info</h1>
+        <div ng-if="dash.error" class="alert alert-danger">{{dash.errorMessage}}</div>
+        <div ng-if="dash.userInfo">
+            <p>Username: {{dash.userInfo.name}}</p>
+            <p>Email: {{dash.userInfo.email}}</p>
+        </div>
+    </div>
+</div>
