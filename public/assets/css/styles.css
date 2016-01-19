@@ -4,6 +4,24 @@
 body{
     background: black;
 }
+a{
+    color: inherit;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+    color: inherit;
+}
+
+/* index html */
+.navbar-transparent{
+    background-color: transparent;
+    color: white;
+    border-bottom: 1px solid white;
+}
+
+
+
 /* home page */
 .night-life-title{
     font-size: 4em;
