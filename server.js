@@ -1,11 +1,11 @@
 var express = require('express'),
     app = express(),
     path = require('path'),
+    cors = require('cors'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     config = require('./config/config'),
     morgan = require('morgan'),
-    jwt = require('jsonwebtoken'),
     port = process.env.PORT || 8080;
 
 
@@ -19,12 +19,13 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
 //handle CORS requests
-app.use(function(req,res,next){
+app.use(cors());
+/*app.use(function(req,res,next){
    res.setHeader('Access-Control-Allow-Origin', '*');
-   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, content-type');
+   res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, content-type, \ Authorization');  
    next();
-});
+});*/
 
 //set the location for static files
 app.use(express.static(__dirname + '/public'));
