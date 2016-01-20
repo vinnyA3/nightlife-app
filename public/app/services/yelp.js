@@ -1,8 +1,10 @@
 angular.module('yelpService', [])
-    .factory('Yelp', function($http){
+    .factory('Yelp', function($q,$http){
         var yelpService = {
             getInfo: getInfo
         }
+       
+    
         function randomString(length, chars){
             var randomString= '';
             for(var i = length; i > 0; --i){
@@ -12,7 +14,9 @@ angular.module('yelpService', [])
         }
         
         function getInfo(loc,callback){
-                    
+            
+            //create new instance of defer
+            var deffered = $q.defer();
             //constant api url
             var url = "https://api.yelp.com/v2/search";
                 var method = 'GET';
@@ -36,7 +40,15 @@ angular.module('yelpService', [])
             params['oauth_signature'] = signature;
             
             //make the get request
-            $http.jsonp(url, {params:params}).success(callback);
+            $http.jsonp(url, {params:params})
+                .success(function(data){
+                        deffered.resolve(data);  
+                })
+                .error(function(){
+                    deffered.reject();
+                });
+            //return the promise
+            return deffered.promise;
         };
                 
         //return the yelp service
