@@ -1,9 +1,17 @@
 .clear{
     clear:both;
 }
-body{
-    background: black;
+html{
+    position: relative;
+    min-height: 100%;
 }
+body{
+    font-family: sans-serif !important;
+    background: url('../img/dark_dotted2.png');
+    overflow-x: hidden;
+    margin: 0 0 100px;
+}
+
 a{
     color: inherit;
     text-decoration: none;
@@ -12,35 +20,272 @@ a:hover{
     text-decoration: none;
     color: inherit;
 }
-
+a:visited{
+    text-decoration: none!important;
+}
+a:active{
+    text-decoration: none!important;
+}
+.md-mg-top{
+    margin-top:40px;
+}
+.view-container{
+    margin: 40px 0px 40px 0px;
+}
 /* index html */
-.navbar-transparent{
-    background-color: transparent;
-    color: white;
-    border-bottom: 1px solid white;
+.footer{
+    width: 100%;
+    background: rgba(0,0,0,0.7);
+    color:white;
+    height: 120px;
+    position:absolute;
+    bottom:0;
+    left: 0;
+    text-align: center;
+}
+.footer ul li{
+    list-style-type: none;
+    display: inline;
+}
+.footer ul li a{
+    text-decoration: none;
+    color: inherit;
+}
+.nav.navbar-nav{
+    float:right;
+}
+.nav.navbar-nav li:hover{
+    border-bottom: white;
 }
 
+.nav.navbar-nav li a:visited{
+    background:rgba(0,0,0,0.7);
+    color:white;
+}
+.navbar-transparent{
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    margin-bottom: 0;
+    border-radius: 0;
+}
+/* angled class */
+.angled-border{
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 90px 100vw 0 0;
+      border-color: rgba(0,0,0,0.7) transparent transparent transparent;
+      transform: scale 1.0001;
+}
 
 
 /* home page */
-.night-life-title{
-    font-size: 4em;
+.navbar-brand.night-life-title{
+    position:relative;
+    font-size:3em;
+    top:40px;
+    font-family: 'Russo One', sans-serif;
     font-weight:bold;
-    color: rgb(237, 217, 220);
-    text-shadow: 3px 3px 5px #fff;
-    margin-bottom: 30px;
+    color: rgb(35, 82, 124);
+    /*color: rgba(239, 79, 237, 0.7);*/
+    text-shadow: 0 0 10px #ffffff,
+             0 0 20px  #ffffff,
+             0 0 30px  #ffffff,
+             0 0 40px  #228DFF,
+             0 0 70px  #228DFF,
+             0 0 80px  #228DFF,
+             0 0 100px #228DFF,
+             0 0 150px #228DFF;
+    -webkit-animation: neonAnimation 1.5s ease-in-out infinite alternate;
+  -moz-animation: neonAnimation 1.5s ease-in-out infinite alternate;
+  animation: neonAnimation 1.5s ease-in-out infinite alternate; 
 }
-.night-life-data{
-    margin-bottom: 5px;
-    padding:5px;
-    border:1px solid #000 !important;
-    background-color: white;
+.night-life-title:hover{
+    cursor:pointer;
+}
+
+.neon:after {
+content: attr(data-neon-text);
+font-size: inherit;
+color: #33FF00;
+top: 0;
+left: 0;
+position: absolute;
+}
+
+   /*Webkit prefix*/
+      @-webkit-keyframes neonAnimation {
+        from {
+          text-shadow: 0 0 10px #ffffff,
+                     0 0 20px  #ffffff,
+                     0 0 30px  #ffffff,
+                     0 0 40px  #228DFF,
+                     0 0 70px  #228DFF,
+                     0 0 80px  #228DFF,
+                     0 0 100px #228DFF,
+                     0 0 150px #228DFF;
+        }
+        to {
+          text-shadow: 0 0 5px #ffffff,
+                     0 0 10px #ffffff,
+                     0 0 15px #ffffff,
+                     0 0 20px #228DFF,
+                     0 0 35px #228DFF,
+                     0 0 40px #228DFF,
+                     0 0 50px #228DFF,
+                     0 0 75px #228DFF;
+        }
+      }
+      
+      
+      /*Moz prefix*/
+      @-moz-keyframes neonAnimation {
+        from {
+          text-shadow: 0 0 10px #ffffff,
+                     0 0 20px  #ffffff,
+                     0 0 30px  #ffffff,
+                     0 0 40px  #228DFF,
+                     0 0 70px  #228DFF,
+                     0 0 80px  #228DFF,
+                     0 0 100px #228DFF,
+                     0 0 150px #228DFF;
+        }
+        to {
+          text-shadow: 0 0 5px #ffffff,
+                     0 0 10px #ffffff,
+                     0 0 15px #ffffff,
+                     0 0 20px #228DFF,
+                     0 0 35px #228DFF,
+                     0 0 40px #228DFF,
+                     0 0 50px #228DFF,
+                     0 0 75px #228DFF;
+        }
+      }
+      
+      /*No prefix*/
+      @keyframes neonAnimation {
+        from {
+          text-shadow: 0 0 10px #ffffff,
+                     0 0 20px  #ffffff,
+                     0 0 30px  #ffffff,
+                     0 0 40px  #228DFF,
+                     0 0 70px  #228DFF,
+                     0 0 80px  #228DFF,
+                     0 0 100px #228DFF,
+                     0 0 150px #228DFF;
+        }
+        to {
+          text-shadow: 0 0 5px #ffffff,
+                0 0 10px #ffffff,
+                0 0 15px #ffffff,
+                0 0 20px #228DFF,
+                0 0 35px #228DFF,
+                0 0 40px #228DFF,
+                0 0 50px #228DFF,
+                0 0 75px #228DFF;
+  }
+}
+
+
+.row.row-centered{
     width: 100%;
 }
-.night-life-data .venue-image{
-    float:left;
+.night-life-container{
+    margin-bottom: 100px;
 }
-.nigt-life-data .venue-rating-image{
-    display: inline-block;
-    padding-left: 5px;
+.night-life-data{
+    position:relative;
+    margin: 8px;
+    padding:10px;
+    height: 250px;
+    color:white;
+    background-color: rgba(0,0,0,0.7);
+    transition: all ease 0.4s;
+}
+.night-life-data:hover{
+    border:1px solid #fff !important;
+    -webkit-box-shadow: 0px 0px 16px 1px rgba(255,255,255,1);
+    -moz-box-shadow: 0px 0px 16px 1px rgba(255,255,255,1);
+    box-shadow: 0px 0px 16px 1px rgba(255,255,255,1);
+}
+.form-control.night-life-search{
+    border-radius: 0;
+    height: 50px;
+    background: transparent;
+    color: white;
+}
+.form-control.night-life-search.mod-form{
+    border-top: none;
+    border-left: none;  
+    border-right: none;
+}
+.form-control.night-life-search.mod-form:focus{
+    border-bottom: none;
+}
+
+.night-life-button{
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 0;
+    color: white;
+    padding: 15px;
+    margin-top:10px;
+    transition: all ease 0.5s;
+}
+.night-life-button:hover{
+    color:#000;
+      background:#ddd;
+      box-shadow:-280px -90px 0px rgb(234, 234, 234) inset;
+}
+.night-life-data .venue-title{
+    font-family: 'Russo One', sans-serif;
+}
+.night-life-data .venue-image{
+    position:absolute;
+    bottom: 10px;
+    right:10px;
+}
+.night-life-data .venue-rating{
+   position: absolute;
+   right: 10px;
+    top:10px;
+}
+.night-life-data .venue-going-btn{
+    border-radius: 0px;
+    background-color: transparent;
+    border:2px solid white;
+    color:inherit;
+    position:absolute;
+    bottom: 10px;
+    left: 10px;
+}
+.night-life-form-container{
+    background: rgba(0,0,0,0.7);
+    text-align:center;
+    padding-bottom:40px;
+}
+.night-life-form-container h1{
+    font-family: 'Russo One', sans-serif;
+    color:rgb(234, 234, 234);
+}
+.profile-info-container{
+    background: rgba(0,0,0,0.7);
+    color:rgb(216, 216, 216);
+    padding: 20px 10px 20px 10px;
+}
+.profile-info-container .social-link{
+    display:block;
+    border-radius:2px;
+    padding: 8px;
+    background-color: red;
+    margin-bottom: 8px;
+}
+.profile-info-container .social-link.facebook{
+    background: #3A5795;
+}
+.profile-info-container .social-link.twitter{
+    background: #42C2B3;
+}
+.profile-info-container ul li{
+    list-style-type: none;
 }
