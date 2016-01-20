@@ -20,10 +20,15 @@ angular.module('mainCtrl', ['yelpService'])
           if(!vm.location){
               return;
           }
-           Yelp.getInfo(vm.location, function(data){
+           Yelp.getInfo(vm.location)
+            .then(function(data){
                console.log(data.businesses);
                vm.nightlifeData = data.businesses;
+           })
+           .catch(function(){
+                console.log('error');
            });
+            
         };
     
     });
