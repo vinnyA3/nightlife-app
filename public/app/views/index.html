@@ -11,6 +11,8 @@
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <!-- font awesome -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!--google fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Russo+One' rel='stylesheet' type='text/css'>
   <!-- custom styles -->
   <link href="assets/css/styles.css" rel="stylesheet" type="text/css">
 </head>
@@ -19,18 +21,25 @@
     
   <div class="fluid-container">
     <nav class="navbar navbar-transparent">
-        <div class="navbar-brand"><a ui-sref="home">Nightlife.io</a></div>     
+        <div class="navbar-brand night-life-title" data-neon-text="Neon Website Title"><span ui-sref="home">Nightlife.io</span></div>     
         <ul class="nav navbar-nav">
         <li ng-if="!main.isAuthenticated()"><a ui-sref="login">Log In</a></li>
         <li ng-if="!main.isAuthenticated()"><a ui-sref="signup">Sign Up</a></li>
         <li ng-if="main.isAuthenticated()"><a ui-sref="dashboard">Dashboard</a></li>
         <li ng-if="main.isAuthenticated()"><a href="#" ng-click="main.logOut()">Log Out</a></li>
     </nav> 
+        <div class="angled-border"></div>
         
-    <div class="container">
+   
         <div ui-view></div> 
-    </div>
+    
         
+      <footer class="footer">
+        <ul>
+            <li>Nightlife.io | </li>  
+            <li><a href="https://github.com/vinnyA3">@vinnyA3</a></li>  
+        </ul>  
+      </footer>
         
   </div>
 

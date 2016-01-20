@@ -1,22 +1,33 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-7 col-md-offset-2 text-center">
-            <h1 class="night-life-title">Nightlife</h1>
-            <form>
-                <input class="form-control" ng-model="main.location" placeholder="Where are you?"><br>
-                <input type="submit" class="btn btn-success" ng-click="main.callYelp()" value="Search">
-            </form>
+<div class="container view-container">
+    <div class="row row-centered">
+        <div class="col-xs-8 col-md-offset-2 text-center">
             
-            <div class="night-life-container">
-                <div class="night-life-data" ng-repeat="venue in main.nightlifeData">
-                    <img class="venue-image" ng-src="{{venue.image_url}}">
-                    <h4 class="venue-title"><a ng-href="{{venue.mobile_url}}" target="_blank">{{venue.name}}</a> &nbsp;<img class="venue-rating-image" ng-src='{{venue.rating_img_url_small}}'></h4>
-                    <p><span ng-repeat="tag in venue.categories">{{tag[0]+ ','}} &nbsp;</span></p>
-                    <p><button class="btn btn-primary">Going?</button></p>
-                    <div class="clear"></div>
-                </div>
-            </div>
+            <h1>Find a bar or club in your area</h1>
+            <form>
+                <input class="form-control night-life-search" ng-model="main.location" placeholder="Where are you?"><br>
+                <input type="submit" class="btn night-life-button" ng-click="main.callYelp()" value="Search">
+            </form>
             
         </div>
     </div>
+    
+
+
+
+    <div class="night-life-container">
+    <div class="row row-centered md-mg-top">
+      
+                    <div class="col-xs-5 col-centered night-life-data" ng-repeat="venue in main.nightlifeData">
+                        <img class="venue-image" ng-src="{{venue.image_url}}">
+                        <h4 class="venue-title"><a ng-href="{{venue.mobile_url}}" target="_blank">{{venue.name}}</a> &nbsp; </h4>
+                        <i class="fa fa-star venue-rating"> {{venue.rating}}</i>
+                        <p><span ng-repeat="tag in venue.categories">{{tag[0]+ ','}} &nbsp;</span></p>
+                        <p>{{venue.location.neighborhoods[0]}}</p>
+                        <p><i class="fa fa-map-marker"></i>  {{venue.location.address[0]}}<br><button class="btn venue-going-btn">Going?</button></p>
+                        <div class="clear"></div>
+                    </div>
+    
+    </div>
+    </div>
+   
 </div>
