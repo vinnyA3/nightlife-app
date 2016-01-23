@@ -2,4 +2,6 @@ Description: A full-stack night-life application that displays all the local bar
 
 Status: In development
 
+Link to app:  https://enigmatic-tor-71692.herokuapp.com/
+
 
