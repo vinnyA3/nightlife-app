@@ -69,7 +69,7 @@ module.exports = function(app,express){
         return jwt.encode(payload,config.secret);
     };
     
-    //authenticate and check if we have a valid token in the headers
+    //auth middleware - authenticate and check if we have a valid token in the headers
     function ensureAuthenticated(req, res, next) {
           if (!req.headers.authorization) {
             return res.status(401).send({ message: 'Please make sure your request has an Authorization header' });
@@ -100,6 +100,9 @@ module.exports = function(app,express){
              return res.send(user);
         });
     });
+	
+	
+	//authenticated bar routes
     
     return router;
     
