@@ -1,5 +1,6 @@
 //require what we need ...
 var User = require('../models/users'),
+	Bar = require('../models/bars'),
     config = require('../../config/config'),
     jwt = require('jwt-simple'),
     moment =  require('moment');
@@ -103,6 +104,50 @@ module.exports = function(app,express){
 	
 	
 	//authenticated bar routes
+	
+	
+	//post to bars - add bar
+	router.post('/bars/:bar_name', ensureAuthenticated, function(req,res){
+		
+		var newBar = new Bar();
+		
+		newBar.name = req.params.bar_name;
+		newBar.attending = 1;
+		
+		newBar.save(function(err,bar){
+			if(err){
+				if(err.code == 11000){
+					return res.send({success: false, message: "bar already exists"});
+				}
+			}
+			
+			res.json({success: true, message: 'bar successfully created!'});
+			
+		});
+		
+		
+	})
+		.put('/bars/:bar_name', ensureAuthenticated, function(req,res){
+			var name = req.params.bar_name;
+			//var to check if we want to increase the attending field, or decrease the attending field
+			var determinant = req.body.determinant;
+		
+			if(determinant == true){
+				//find bar by name and add 1 to attending
+				Bar.findOne({name: name}, {$inc: {attending: 1}}, function(err,bar){
+					if(err){ return res.send(err);}
+					return res.send({success:true, message: 'attending incremented!', bar:bar});
+				});
+			}else{
+				//find bar by name and subtract 1 to attending
+				Bar.findOne({name: name}, {$inc: {attending: -1}}, function(err,bar){
+					if(err){ return res.send(err);}
+					return res.send({success:true, message: 'attending decremented!', bar:bar});
+				})
+			}
+		
+			
+		});
     
     return router;
     
