@@ -107,12 +107,15 @@ module.exports = function(app,express){
 	
 	
 	//post to bars - add bar
-	router.post('/bars/:bar_name', ensureAuthenticated, function(req,res){
+	router.post('/bars', ensureAuthenticated, function(req,res){
 		
 		var newBar = new Bar();
 		
-		newBar.name = req.params.bar_name;
-		newBar.attending = 1;
+		newBar.location = req.body.location;
+		newBar.bars.push({
+			name: req.body.barname,
+			attending: 1
+		});
 		
 		newBar.save(function(err,bar){
 			if(err){
@@ -121,14 +124,23 @@ module.exports = function(app,express){
 				}
 			}
 			
-			res.json({success: true, message: 'bar successfully created!'});
+			res.json({success: true, message: 'bar successfully created!', bar:bar});
 			
 		});
 		
 		
 	})
-		.put('/bars/:bar_name', ensureAuthenticated, function(req,res){
-			var name = req.params.bar_name;
+	// ********** THIS ROUTE IS NOT AUTHENTICATED ************************
+		.get('/bars/:location', function(req,res){
+			Bar.findOne({location: req.params.location}, function(err,bars){
+				if(err){return res.send(err);}
+				
+				//return the bars based on location
+				return res.send(bars);
+			});
+		})
+		.put('/bars', ensureAuthenticated, function(req,res){
+			var name = req.name.barname;
 			//var to check if we want to increase the attending field, or decrease the attending field
 			var determinant = req.body.determinant;
 		
