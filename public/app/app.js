@@ -7,5 +7,6 @@ angular.module('mainApp', [
     'loginCtrl',
     'appRoutes',
     'userService',
-    'yelpService'
+    'yelpService',
+    'barsService'
 ]);
