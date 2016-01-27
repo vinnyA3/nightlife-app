@@ -1,8 +1,11 @@
 var mongoose = require('mongoose');
 
 var BarSchema = mongoose.Schema({
-	name: {type: String ,index:{unique: true}},
-	attending: Number
+	location: {type: String ,index:{unique: true}},
+	bars: [{
+		name: String,
+		attending: Number
+	}]
 });
 
 module.exports = mongoose.model('Bar', BarSchema);
