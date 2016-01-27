@@ -25,7 +25,9 @@
                             <i class="fa fa-star venue-rating"> {{venue.rating}}</i>
                             <p><span ng-repeat="tag in venue.categories">{{tag[0]+ ','}} &nbsp;</span></p>
                             <p>{{venue.location.neighborhoods[0]}}</p>
-                            <p><i class="fa fa-map-marker"></i>  {{venue.location.address[0]}}<br><button class="btn venue-going-btn">Going?</button></p>
+                            <p><i class="fa fa-map-marker"></i>  {{venue.location.address[0]}}</p>
+							<p ng-if="venue.attending"><i class="fa fa-user"></i> {{venue.attending}}</p>
+							<button class="btn venue-going-btn" ng-click="main.attend(venue)">Going?</button></p>
                             <div class="clear"></div>
                             
                         </div>
