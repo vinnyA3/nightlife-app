@@ -22,12 +22,22 @@ angular.module('barsService', [])
 			return deffered.promise;
 		};
 	
-		function modify(bar){
+		function modify(bar,location){
 			var deffered = $q.defer();
+			//lets set the localStrage variable: determinant to a variable to send to the server
+			var determinant = localStorage.getItem('determinant');
 			
-			$http.put('/auth/bars/' + bar)
+			$http.put('/auth/bars/' + bar,{location: location,determinant:determinant})
 				.success(function(data){
-					deffered.resolve(data);
+					//set the user's 'going' var in local storage
+					if(data.deter == true){
+						localStorage.setItem('determinant', true);
+						deffered.resolve(data);
+					}
+					else{
+						localStorage.setItem('determinant', false);
+						deffered.resolve(data);
+					}
 				})
 				.error(function(){
 					deffered.reject();
