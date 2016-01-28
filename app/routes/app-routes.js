@@ -1,6 +1,6 @@
 //require what we need ...
 var User = require('../models/users'),
-	Bar = require('../models/bars'),
+	Bar = require('../models/barModel'),
     config = require('../../config/config'),
     jwt = require('jwt-simple'),
     moment =  require('moment');
@@ -108,25 +108,18 @@ module.exports = function(app,express){
 	
 	//post to bars - add bar
 	router.post('/bars', ensureAuthenticated, function(req,res){
-		
-		var newBar = new Bar();
-		
-		newBar.location = req.body.location;
-		newBar.bars.push({
-			name: req.body.barname,
-			attending: 1
-		});
-		
-		newBar.save(function(err,bar){
+		//first lets check that the passed location matches an enry in the db
+			Bar.findOneAndUpdate({location: req.body.location}, {$push: {'bars':{name:req.body.barname, attending: 1}}}, {upsert:true,new:true}, function(err,bar){
 			if(err){
+				//if we found a duplicate entry, we want to push the request bar's name and attending into the found entry's bar array in db
 				if(err.code == 11000){
-					return res.send({success: false, message: "bar already exists"});
+					return res.send({success: false, message: 'bar with that name already exists'});
+				}else{
+					return res.send(err);
 				}
 			}
-			
-			res.json({success: true, message: 'bar successfully created!', bar:bar});
-			
-		});
+			return res.send({success: true, bar:bar});		
+		}); //end bar find one
 		
 		
 	})
@@ -139,26 +132,23 @@ module.exports = function(app,express){
 				return res.send(bars);
 			});
 		})
-		.put('/bars', ensureAuthenticated, function(req,res){
-			var name = req.name.barname;
-			//var to check if we want to increase the attending field, or decrease the attending field
+		.put('/bars/:barname', ensureAuthenticated, function(req,res){
+			var name = req.params.barname;
+			var location = req.body.location;
+			//var determinant to check if we want to increase the attending field, or decrease the attending field
 			var determinant = req.body.determinant;
-		
-			if(determinant == true){
-				//find bar by name and add 1 to attending
-				Bar.findOne({name: name}, {$inc: {attending: 1}}, function(err,bar){
-					if(err){ return res.send(err);}
-					return res.send({success:true, message: 'attending incremented!', bar:bar});
+			if(determinant == false || determinant == undefined){
+				Bar.findOneAndUpdate({location: location, 'bars.name':name}, {$inc:{'bars.$.attending': 1}}, function(err,bar){
+					if(err){return res.send(err);}
+					return res.send({success:true, message: 'attending incremented!', deter:true, bar:bar});
 				});
 			}else{
-				//find bar by name and subtract 1 to attending
-				Bar.findOne({name: name}, {$inc: {attending: -1}}, function(err,bar){
-					if(err){ return res.send(err);}
-					return res.send({success:true, message: 'attending decremented!', bar:bar});
-				})
+				Bar.findOneAndUpdate({location: location, 'bars.name':name}, {$inc:{'bars.$.attending': -1}}, function(err,bar){
+					if(err){return res.send(err);}
+					return res.send({success:true, message: 'attending decremented!', deter:false, bar:bar});
+				});
 			}
-		
-			
+
 		});
     
     return router;
