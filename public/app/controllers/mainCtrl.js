@@ -58,24 +58,35 @@ angular.module('mainCtrl', ['yelpService','barsService'])
         };
 
 		//attending function
-		/*vm.attend = function(venue){
-			
-			//if we are not already going to the venue ... 
-			if(!venue.userGoing && !venue.attending){
+		vm.attend = function(venue){	
+			//if we already have an attending variable on the venue obj, then we modify the attending variable
+			console.log('name = ' +venue.name);
+			if(venue.attending){
+				Bars.modifyBar(venue.name,vm.location)
+					.then(function(data){
+						 venue.attending = (data.deter == true ? venue.attending += 1 : venue.attending -= 1);
+						 if(data.deter == false){localStorage.setItem('determinant', true);}
+					})
+					.catch(function(){
+						console.log('failed to modify bar');
+					});
+			}else{
 			//send the bar name and the search location to the bar service post
 					Bars.createBar(vm.location, venue.name)
 						.then(function(data){
 							//console.log(data);
 							//determinant var for check in
-							vm.userGoing = true;
-							venue.attending = data.bar.bars.attending;
+							localStorage.setItem('determinant',true);
+						    console.log(data);
+							venue.attending = data.bar.bars[0].attending;
 						})
 						.catch(function(data){
 							console.log('error ....' + data);
 						});
-		    
-			}
 			//if we have an attending variable, we need to make sure that the user is not already going
 			//if the user is not already going, we want to send a put request and add one to attending in db and view
-		};*/
+			}
+			
+		};
+	
 });//end controller
