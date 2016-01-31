@@ -143,8 +143,10 @@ module.exports = function(app,express){
 					return res.send({success:true, message: 'attending incremented!', deter:true, bar:bar});
 				});
 			}else{
-				Bar.findOneAndUpdate({location: location, 'bars.name':name}, {$inc:{'bars.$.attending': -1}}, function(err,bar){
+				Bar.findOneAndUpdate({location: location, 'bars.name':name}, {$inc:{'bars.$.attending': -1} }, function(err,bar){
 					if(err){return res.send(err);}
+					//if the bar's attending field == 0, we want to delete it from our database :)
+					
 					return res.send({success:true, message: 'attending decremented!', deter:false, bar:bar});
 				});
 			}
