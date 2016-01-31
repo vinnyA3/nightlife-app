@@ -1,5 +1,5 @@
 angular.module('appRoutes', ['ui.router','satellizer'])
-    .config(function($stateProvider, $urlRouterProvider,$locationProvider){
+    .config(function($stateProvider, $urlRouterProvider,$locationProvider,$authProvider){
         $stateProvider
             .state('home',{
                 url:'/',
@@ -26,6 +26,11 @@ angular.module('appRoutes', ['ui.router','satellizer'])
             });
     
             $urlRouterProvider.otherwise('/');
+	
+	
+			$authProvider.facebook({
+				clientId: '1759826164247911'
+    		});
     
             $locationProvider.html5Mode(true);
     
