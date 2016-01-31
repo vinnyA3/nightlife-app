@@ -9,6 +9,8 @@
                 <input class="form-control night-life-search mod-form" type="text" ng-model="login.user.email" placeholder="Email"><br>
                 <input class="form-control night-life-search mod-form" type="password" ng-model="login.user.password" placeholder="Password"><br>
                 <input type="submit" class="btn night-life-button" value="Login">
+				<div class="sm-mg-top"><hr><span class="login-form-or">or</span></div>
+				<span ng-click="login.authenticate('facebook')" class="social-link facebook"><i class="fa fa-facebook"></i> &nbsp;Login with Facebook</span>
             </form>
         </div>
     </div>
