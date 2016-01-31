@@ -20,5 +20,23 @@ angular.module('loginCtrl', [])
                     vm.errorMessage = "Failed to login, please try again."
                 });
         };
+	
+		//authenticate
+		vm.authenticate = function(provider){
+			$auth.authenticate(provider)
+				.then(function(){
+					$location.path('/dashboard');
+				})
+				.catch(function(error){
+					if(error.error){
+						console.log(error.error);
+					}else if(error.data){
+						console.log(error.data);
+					}
+					else{
+						console.log(error);
+					}
+				});
+		};
     
     });
