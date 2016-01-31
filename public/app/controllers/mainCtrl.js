@@ -31,17 +31,26 @@ angular.module('mainCtrl', ['yelpService','barsService'])
 	
         //yelp call  function
         vm.callYelp = function(){
-		 //PREVENT API CALL IF THE FORM IS BLANK
-          if(!vm.location){
-              return;
-          }
-           Yelp.getInfo(vm.location)
+        
+		  var searchLocation = localStorage.getItem('location');
+		
+		  //PREVENT API CALL IF THE FORM IS BLANK OR IF WE DONT HAVE A LOCATION ON LOCAL STORAGE
+		  if(!vm.location && (searchLocation == undefined)){
+			  return;
+		  }
+		
+		  var loc = vm.location ? vm.location : searchLocation;
+		  console.log(loc);
+		  
+           Yelp.getInfo(loc)
             .then(function(data){
 			   
 			   //SET OUR DATA WITH THE RETURNED OBJ FROM THE API 
                vm.nightlifeData = data.businesses;
+			   //set the location in local storage to persist the search
+			   localStorage.setItem('location', loc);
 			   //call our get Bar function
-			   Bars.getBars(vm.location)
+			   Bars.getBars(loc)
 			   		.then(function(data){
 				   		//ADD THE BAR'S ATTENDING FIELD TO THE NIGHTLIFE DATA OBJ
 				        attendingPopulation(data.bars, vm.nightlifeData);
@@ -51,12 +60,12 @@ angular.module('mainCtrl', ['yelpService','barsService'])
 			   		});
                
            })
-           .catch(function(){
-                console.log('error');
+           .catch(function(data){
+                console.log('error ... '+data);
            });
             
         };
-
+	
 		//attending function
 		vm.attend = function(venue){	
 			//if we already have an attending variable on the venue obj, then we modify the attending variable
@@ -64,6 +73,7 @@ angular.module('mainCtrl', ['yelpService','barsService'])
 			if(venue.attending){
 				Bars.modifyBar(venue.name,vm.location)
 					.then(function(data){
+					    console.log(data);
 						 venue.attending = (data.deter == true ? venue.attending += 1 : venue.attending -= 1);
 						 if(data.deter == false){localStorage.setItem('determinant', true);}
 					})
@@ -81,6 +91,7 @@ angular.module('mainCtrl', ['yelpService','barsService'])
 							venue.attending = data.bar.bars[0].attending;
 						})
 						.catch(function(data){
+						$location.path('/login');
 							console.log('error ....' + data);
 						});
 			//if we have an attending variable, we need to make sure that the user is not already going
@@ -88,5 +99,8 @@ angular.module('mainCtrl', ['yelpService','barsService'])
 			}
 			
 		};
+	
+	//call yelp data function
+	vm.callYelp();
 	
 });//end controller
