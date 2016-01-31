@@ -47,11 +47,12 @@ angular.module('barsService', [])
 			return deffered.promise;
 		};
 	
+		
 		function getBars(location){
 			var deffered = $q.defer();
-			
-			$http.get('/auth/bars/' + location)
+			$http.get('/auth/bars/' + location, {cache:true})
 				.success(function(data){
+				
 					deffered.resolve(data);
 				})
 				.error(function(data){

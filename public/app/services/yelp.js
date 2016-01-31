@@ -13,7 +13,7 @@ angular.module('yelpService', [])
             return randomString;
         }
         
-        function getInfo(loc,callback){
+        function getInfo(loc){
             
             //create new instance of defer
             var deffered = $q.defer();
@@ -44,8 +44,8 @@ angular.module('yelpService', [])
                 .success(function(data){
                         deffered.resolve(data);  
                 })
-                .error(function(){
-                    deffered.reject();
+                .error(function(data){
+                    deffered.reject(data);
                 });
             //return the promise
             return deffered.promise;
