@@ -7,6 +7,7 @@
   <title>Nightlife</title>
   <meta name="description" content="fullstack, javascript, Nightlife">
   <meta name="author" content="vinny">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap CSS -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <!-- font awesome -->
@@ -18,30 +19,30 @@
 </head>
 
 <body ng-app="mainApp" ng-controller="mainController as main">
-    
+
   <div class="container-fluid">
     <nav class="navbar navbar-transparent">
-        <div class="navbar-brand night-life-title" data-neon-text="Neon Website Title"><span ui-sref="home">Nightlife.io</span></div>     
+        <div class="navbar-brand night-life-title" data-neon-text="Neon Website Title"><span ui-sref="home">Nightlife.io</span></div>
         <ul class="nav navbar-nav">
         <li ng-if="!main.isAuthenticated()"><a ui-sref="login">Log In</a></li>
         <li ng-if="!main.isAuthenticated()"><a ui-sref="signup">Sign Up</a></li>
         <li ng-if="main.isAuthenticated()"><a ui-sref="dashboard">Dashboard</a></li>
         <li ng-if="main.isAuthenticated()"><a href="#" ng-click="main.logOut()">Log Out</a></li>
-    </nav> 
+    </nav>
         <div class="angled-border"></div>
-        
-   
-        <div ui-view></div> 
-    
-        
-      <footer class="footer text-center"> 
+
+
+        <div ui-view></div>
+
+
+      <footer class="footer text-center">
             <ul class="list-unstyled list-inline">
-                <li>Nightlife.io</li>  
+                <li>Nightlife.io</li>
                 <li> | </li>
-                <li><a href="https://github.com/vinnyA3" target="_blank">@vinnyA3</a></li>  
-            </ul>  
+                <li><a href="https://github.com/vinnyA3" target="_blank">@vinnyA3</a></li>
+            </ul>
       </footer>
-        
+
   </div>
 
 <!-- o-auth-signature -->
